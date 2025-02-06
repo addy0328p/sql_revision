@@ -26,3 +26,41 @@ SELECT emp_id, CONCAT(name, 'ABCD') AS nameanddesicombine FROM employees;
 -- This query extracts a substring from the 'emp_id' column, starting from the 2nd character onwards.
 -- The result is given an alias 'EMPIID'. It also selects the 'name' column.
 SELECT SUBSTRING(emp_id, 2) AS EMPIID, name FROM employees;
+
+
+
+-- Replaces occurrences of '10' with '1000' in the 'emp_id' column (if applicable)
+SELECT REPLACE(emp_id, 10, 1000) AS newemp_id FROM employees;
+
+-- Reverses the string 'hello' and returns 'olleh'
+SELECT REVERSE('hello'); 
+
+-- Reverses the values in the 'name' column for each employee
+SELECT REVERSE(name) FROM employees;
+
+-- Converts the string 'abcdxyz' to uppercase ('ABCDXYZ')
+SELECT UPPER('abcdxyz');
+
+-- Converts the string 'ADDY' to lowercase ('addy')
+SELECT LOWER('ADDY');
+
+-- Returns the number of characters in the string 'fasasf' (which is 6)
+SELECT CHAR_LENGTH('fasasf');
+
+-- Retrieves all employees whose 'name' column has more than 9 characters
+SELECT * FROM employees WHERE CHAR_LENGTH(name) > 9;
+
+-- Inserts 'add' at the 6th position in the string 'hello as' without replacing any characters
+SELECT INSERT('hello as', 6, 0, 'add');
+
+-- Returns the first 3 characters from the left side of 'adsa' ('ads')
+SELECT LEFT('adsa', 3);
+
+-- Returns the last 2 characters from the right side of 'asas' ('as')
+SELECT RIGHT('asas', 2);
+
+-- Repeats the character 'a' 9 times ('aaaaaaaaa')
+SELECT REPEAT('a', 9);
+
+-- Removes leading and trailing spaces from '   asdasd     ', returning 'asdasd'
+SELECT TRIM('   asdasd     ');
