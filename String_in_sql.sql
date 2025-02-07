@@ -64,3 +64,14 @@ SELECT REPEAT('a', 9);
 
 -- Removes leading and trailing spaces from '   asdasd     ', returning 'asdasd'
 SELECT TRIM('   asdasd     ');
+
+
+
+-- Concatenates emp_id, full name, designation, and department with ':' as a separator
+SELECT CONCAT_WS(':', emp_id, CONCAT(fname, ' ', lname), desig, dept) FROM employees;
+
+-- Concatenates fname, lname, designation (in uppercase), and department with ':' at the beginning
+SELECT CONCAT(':', fname, ' ', UPPER(desig), ' ', dept) FROM employees WHERE emp_id = 1;
+
+-- Creates a unique ID using the first letter of the department and emp_id, then selects fname
+SELECT CONCAT(LEFT(dept, 1), emp_id), fname FROM employees;
