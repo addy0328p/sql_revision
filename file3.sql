@@ -69,3 +69,30 @@ SELECT MAX(salary) FROM employees;
 -- Selects the emp_id, first name, and salary of the employee(s) with the highest salary
 SELECT emp_id, fname, salary FROM employees
 WHERE salary = (SELECT MAX(salary) FROM employees);
+
+
+
+-- Counts the number of employees in each department by grouping them by department
+SELECT dept, COUNT(emp_id) FROM employees GROUP BY dept;
+
+-- Finds the minimum salary among all employees
+SELECT MIN(salary) FROM employees;
+
+-- Selects all details of the employee(s) who have the highest salary
+SELECT * FROM employees WHERE salary = (SELECT MAX(salary) FROM employees);
+
+-- ❌ Incorrect Query: This tries to compare a department with the sum of all salaries, which is logically incorrect.
+-- It will cause an error because `dept` is a string and `SUM(salary)` is a numeric value.
+-- Possible Fix: If you're trying to find employees in the department with the highest total salary, use a subquery 
+-- to first determine the department with the highest salary sum.
+-- ❌ Incorrect Query:
+SELECT * FROM employees WHERE dept = (SELECT SUM(salary) FROM employees);
+
+-- ✅ Corrected Query: Finds employees in the department where total salary is the highest
+SELECT * FROM employees WHERE dept = (
+    SELECT dept FROM employees GROUP BY dept ORDER BY SUM(salary) DESC LIMIT 1
+);
+
+-- Groups employees by department and calculates the average salary in each department
+SELECT dept, AVG(salary) FROM employees GROUP BY dept;
+
