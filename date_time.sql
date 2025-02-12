@@ -87,3 +87,70 @@ SELECT UTC_TIMESTAMP();      -- Returns the current UTC date and time
 ✅ DATETIME stores both date and time (e.g., 2024-05-14 22:05:02).
 ✅ NOW() returns both date & time, while CURDATE() and CURTIME() return only date or time.
 ✅ DATE_FORMAT() is used to customize date output.
+
+
+
+-- Calculating the difference between two dates
+-- Returns the number of days between the two dates
+-- Negative result because the first date is earlier than the second date
+SELECT DATEDIFF('2023-04-12', '2025-01-21');
+
+-- Adding 1 year to the current date and time
+-- Useful for calculating expiration dates or future events
+SELECT DATE_ADD(NOW(), INTERVAL 1 YEAR);
+
+-- Subtracting 1 year from the current date and time
+-- Useful for finding the date 1 year ago from today
+SELECT DATE_SUB(NOW(), INTERVAL 1 YEAR);
+
+-- Calculating the difference between two times
+-- The second time is invalid (hours > 24), so it will return NULL
+SELECT TIMEDIFF('23:00:00', '30:43:23');
+
+-- Creating a table named blogs to store blog posts
+-- 'text' column stores the blog content
+-- 'created_at' column automatically stores the timestamp when a row is created
+-- 'updated_at' column automatically updates the timestamp when a row is updated
+CREATE TABLE blogs (
+    text VARCHAR(120),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Describing the table structure
+-- Shows the columns, data types, and default values
+DESC blogs;
+
+-- Inserting a new blog post
+-- 'created_at' will store the current timestamp automatically
+-- 'updated_at' will also be set to the current timestamp
+INSERT INTO blogs (text)
+VALUES ('this is my first blog');
+
+-- Viewing all the data from the blogs table
+-- Displays the text, created_at, and updated_at columns
+SELECT * FROM blogs;
+
+-- Disabling Safe Update Mode temporarily to allow updating without a WHERE clause
+-- Be cautious when doing this as it can affect all rows in the table
+SET SQL_SAFE_UPDATES = 0;
+
+-- Updating the text of all blog posts
+-- Since no WHERE clause is used, it will update all rows in the table
+UPDATE blogs 
+SET text = 'this is my second blog not first';
+
+-- Re-enabling Safe Update Mode after the update
+-- It's good practice to turn it back on to avoid accidental updates
+SET SQL_SAFE_UPDATES = 1;
+
+-- Viewing the updated data in the blogs table
+-- 'text' should now be updated for all rows
+-- 'updated_at' should also reflect the new timestamp
+SELECT * FROM blogs;
+
+DATEDIFF() calculates the difference in days between two dates.
+DATE_ADD() and DATE_SUB() are used for date arithmetic.
+TIMEDIFF() calculates the difference between two times but returns NULL if the second time is invalid.
+CURRENT_TIMESTAMP in created_at and updated_at automatically tracks creation and update times.
+SQL_SAFE_UPDATES is disabled temporarily to update all rows without a WHERE clause but should be re-enabled afterward.
